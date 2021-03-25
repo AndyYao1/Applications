@@ -30,7 +30,19 @@
             <!-- Converter Modal Content -->
             <div id = "converterModalContent" class = "modalContent">
                 <span class = "close" >&times;</span>
-                <p>Placeholder</p>
+                <form>
+                    <label for="Base">Base:</label>
+                    <select name="Base" id="Base">
+                      <option value="Binary">Binary</option>
+                      <option value="Octal">Octal</option>
+                      <option value="Decimal">Decimal</option>
+                      <option value="Hexadecimal">Hexadecimal</option>
+                      <option value="Custom">Custom</option>
+                    </select>
+                    <label for="Number">Number:</label>
+                    <input type="text" id="Number">
+                </form>
+
             </div>
             
         </div>
