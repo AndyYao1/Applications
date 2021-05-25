@@ -17,11 +17,3 @@ window.onclick = function(event) {
       convertModal.style.display = "none";
     }
   }
-
-function customInput(that) {
-    if (that.value == "Custom") {
-        document.getElementById("Custom").style.display = "block";
-    } else {
-        document.getElementById("Custom").style.display = "none";
-    }
-}

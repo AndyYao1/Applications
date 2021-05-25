@@ -32,17 +32,23 @@
                 <span class = "close" >&times;</span>
                 <form>
                     <label for="Base">Base:</label>
-                    <select name="Base" id="Base" onchange="customInput(this);">
+                    <select name="Base" id="Base" onchange="">
                       <option value="Binary">Binary</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
                       <option value="Octal">Octal</option>
+                      <option value="9">9</option>
                       <option value="Decimal">Decimal</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
                       <option value="Hexadecimal">Hexadecimal</option>
-                      <option value="Custom">Custom</option>
                     </select>
-                      <div id = "Custom" style = "display: none;">
-                        <label for = "Custom">Base:</label>
-                        <input type = "text" id ="Custom">
-                      </div>
                     <label for="Number">Number:</label>
                     <input type="text" id="Number">
                 </form>
