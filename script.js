@@ -20,9 +20,31 @@ window.onclick = function(event) {
     }
   }
 
+convertBtn.onclick() = function(event) {
+  var fromBase = document.getElementById("FromBase").value;
+  var toBase = document.getElementById("ToBase").value;
+  var input = document.getElementById("Number").value;
+  if(fromBase < 11){
+    for(let i = 0; i < input.length; i++){
+      if(input.charCodeAt(i) < 48 || input.charCodeAt(i) > 48 + fromBase - 1){
+        //error
+        return;
+      }
+    }
+  } else {
+    if(input.charCodeAt(i) < 48 || (input.charCodeAt(i) > 57 && input.charCodeAt(i) < 65) || input.charCodeAt(i) > 54 + fromBase ){
+      //error
+      return;
+    }
+  }
+  var result = toTen(input,fromBase);
+  result = fromTen(result,toBase);
+  return result;
+}
+
 function toTen(input,base) {
-  var i,output;
-  for (i = 0; i < input.length; i++) {
+  var output = 0;
+  for (let i = 0; i < input.length; i++) {
     output += input.charAt(i) * Math.pow(base,i);
   }
   return output;
