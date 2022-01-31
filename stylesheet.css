@@ -31,7 +31,7 @@
 .modalContent {
     background-color: #fefefefa;
     margin: auto;
-    padding: 10px;
+    padding: 20px 50px 50px 50px;
     border: 2px solid #888;
     width: 50%;
   }
@@ -50,3 +50,8 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+#convertButton{
+    margin: 0 auto;
+    display: block;
+}

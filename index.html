@@ -30,7 +30,7 @@
             <!-- Converter Modal Content -->
             <div id = "converterModalContent" class = "modalContent">
                 <span class = "close" >&times;</span>
-                <form>
+                <form id ="ConvertForm" onsubmit="return false">
                     <label for="FromBase">From Base:</label>
                     <select name="FromBase" id="FromBase">
                       <option value="2">2 (Binary)</option>
@@ -48,7 +48,7 @@
                       <option value="14">14</option>
                       <option value="15">15</option>
                       <option value="16">16 (Hexadecimal)</option>
-                    </select>
+                    </select> </br>
 
                     <label for="ToBase">To Base:</label>
                     <select name="ToBase" id="ToBase">
@@ -69,13 +69,14 @@
                       <option value="16">16 (Hexadecimal)</option>
                     </select>
                 </br>
-                    <label for="Number">Number:</label>
-                    <input type="text" id="Number">
+                    <label for="Number">Number (Capitalize Letters):</label> </br>
+                    <input type="text" id="Number"> </br>
+                    <span id="error"></span>
                 </form>
-                <button onclick = "convert();" type="button" id = "convertButton" >Convert!</button>
-            </br>
-                <label for="Result">Result:</label>
+                <label for="Result">Result:</label> </br>
                 <input type="text" id="Result" readonly>
+                </br>
+                <button onclick = "convert();" type="button" id = "convertButton" >Convert!</button>
             </div>
             
         </div>
