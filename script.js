@@ -31,7 +31,7 @@ close.onclick = function(){
     convertModal.style.display = "none";
 }
 
-window.onclick = function(event) {
+window.onmousedown = function(event) {
     if (event.target == convertModal) {
       error.textContent = "";
       document.getElementById("ConvertForm").reset();
