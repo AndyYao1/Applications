@@ -1,12 +1,18 @@
-var btn = document.getElementById("convertModalButton");
+var convertModalBtn = document.getElementById("convertModalButton");
 
 var convertModal = document.getElementById("converterModal");
 
-var close = document.getElementsByClassName("close")[0];
+var close = document.getElementsByClassName("close");
 
 var convertBtn = document.getElementById("convertButton");
 
 var number = document.getElementById("Number");
+
+
+var secondBtn = document.getElementById("secondButton");
+
+var secondModal = document.getElementById("secondModal");
+
 
 window.addEventListener("keydown", function(e){
   if(e.code === "Enter"){
@@ -20,23 +26,25 @@ number.addEventListener("keydown", function(e){
   }
 });
 
-btn.onclick = function(){
+convertModalBtn.onclick = function(){
     convertModal.style.display = "block";
 }
 
-close.onclick = function(){
-    error.textContent = "";
-    document.getElementById("ConvertForm").reset();
-    document.getElementById("Result").value = '';
-    convertModal.style.display = "none";
+secondBtn.onclick = function(){
+    secondModal.style.display = "block";
+}
+
+for(var i = 0; i < close.length; i++){
+    close[i].onclick = function(){
+      convertModal.style.display = "none";
+      secondModal.style.display = "none";
+    }
 }
 
 window.onmousedown = function(event) {
-    if (event.target == convertModal) {
-      error.textContent = "";
-      document.getElementById("ConvertForm").reset();
-      document.getElementById("Result").value = '';
+    if (event.target == convertModal || event.target == secondModal) {
       convertModal.style.display = "none";
+      secondModal.style.display = "none";
     }
 }
 
