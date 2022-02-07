@@ -31,15 +31,16 @@
 .modalContent {
     background-color: #fefefefa;
     margin: auto;
-    padding: 20px 50px 50px 50px;
+    padding: 20px 40px 50px 50px;
     border: 2px solid #888;
     width: 50%;
   }
 
 .close {
-    color: rgba(0,0,0,0.4);
-    color:  rgb(0,0,0); 
+    top: 0;
+    right: 0;
     float: right;
+    padding-left: 30px;
     font-size: 28px;
     font-weight: bold;
   }
@@ -54,4 +55,22 @@
 #convertButton{
     margin: 0 auto;
     display: block;
+}
+
+.row{
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    display: grid;
+    margin-left: 250px;
+    margin-right: 250px;
+}
+
+.box{
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(73, 73, 73);
+    background-color: #ffffff;
+    display: flex;
+    min-height: 3rem;
+    margin: 2px 2px 2px 2px;
+    padding: 0%;
 }
