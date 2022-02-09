@@ -27,6 +27,8 @@ var guessableWords = [];
 
 var answer;
 
+var finished = false;
+
 var possibleRequest = new XMLHttpRequest();
 possibleRequest.open('GET', 'https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt');
 possibleRequest.onload = function(){
@@ -54,7 +56,7 @@ window.addEventListener("keydown", function (e){
 });
 
 function addLetter(e){
-    if(currentBox < currentRow * 5){
+    if(currentBox < currentRow * 5 && !finished){
         boxes[currentBox].innerHTML = e.toUpperCase();
         boxes[currentBox].style.border = "2px solid rgb(130, 130, 130)";
         currentBox++;
@@ -62,10 +64,12 @@ function addLetter(e){
 }
 
 function deleteLetter(){
-    if(currentBox > 0)
-        currentBox--;
-    boxes[currentBox].innerHTML = "";
-    boxes[currentBox].style.border = "1px solid rgb(168, 168, 168)";
+    if(currentBox % 5 != 0 || currentRow * 5 == currentBox && !finished){
+        if(currentBox > 0)
+            currentBox--;
+        boxes[currentBox].innerHTML = "";
+        boxes[currentBox].style.border = "1px solid rgb(168, 168, 168)";
+    }
 }
 
 function submitGuess(){
@@ -82,7 +86,8 @@ function submitGuess(){
         letters.forEach(box => box.setAttribute("style", "color: #ffffff;"));
         // correct guess
         if(guess.toLowerCase() === answer){
-            letters.forEach(box => box.setAttribute("style", "background-color: #64b95c;"));
+            letters.forEach(box => box.setAttribute("style", "background-color: #64b95c; color: #ffffff"));
+            finished = true;
         } else {
             // incorrect guess
             for(let i = 0; i < 5; i++){
@@ -91,7 +96,7 @@ function submitGuess(){
                 else if(answer.includes(guess.charAt(i).toLowerCase()))
                     letters[i].style.backgroundColor = "#e0ca69";
                 else
-                    letters[i].style.backgroundColor = "#a6acaf"
+                    letters[i].style.backgroundColor = "#717678"
             }
             currentRow++;
         }
