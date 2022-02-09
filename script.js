@@ -19,14 +19,91 @@ var boxes = document.getElementsByClassName("box");
 
 var currentBox = 0;
 
+var currentRow = 1;
+
+var possibleWords = [];
+
+var guessableWords = [];
+
+var answer;
+
+var possibleRequest = new XMLHttpRequest();
+possibleRequest.open('GET', 'https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt');
+possibleRequest.onload = function(){
+    possibleWords = this.responseText.split(/\n/);
+};
+possibleRequest.send();
+
+var guessableRequest = new XMLHttpRequest();
+guessableRequest.open('GET', 'https://gist.githubusercontent.com/cfreshman/cdcdf777450c5b5301e439061d29694c/raw/de1df631b45492e0974f7affe266ec36fed736eb/wordle-allowed-guesses.txt');
+guessableRequest.onload = function(){
+    guessableWords = this.responseText.split(/\n/);
+};
+guessableRequest.send();
+
 
 window.addEventListener("keydown", function (e){
-  if(secondModal.style.display == "block" && (e.key >= 'a' && e.key <= 'z')){
-    boxes[currentBox].innerHTML = e.key.toUpperCase();
-    boxes[currentBox].style.border = "2px solid rgb(130, 130, 130)";
-    currentBox++;
-  }
+    if(secondModal.style.display == "block"){
+        if(e.key >= 'a' && e.key <= 'z')
+            addLetter(e.key);
+        if(e.key == 'Backspace' || e.key == 'Delete')
+            deleteLetter();
+        if(e.key == 'Enter')
+            submitGuess();
+    }
 });
+
+function addLetter(e){
+    if(currentBox < currentRow * 5){
+        boxes[currentBox].innerHTML = e.toUpperCase();
+        boxes[currentBox].style.border = "2px solid rgb(130, 130, 130)";
+        currentBox++;
+    }
+}
+
+function deleteLetter(){
+    if(currentBox > 0)
+        currentBox--;
+    boxes[currentBox].innerHTML = "";
+    boxes[currentBox].style.border = "1px solid rgb(168, 168, 168)";
+}
+
+function submitGuess(){
+    var guess = "";
+    var letters = [];
+    // 5 letter guess
+    if(currentBox % 5 == 0 && currentBox != 0){
+        letters = Array.from(boxes).slice(currentBox - 5, currentBox);
+        guess = letters.map(box => box.innerHTML).join('');
+    }
+    // check if word is in guessable list
+    console.log(answer)
+    if(guessableWords.includes(guess.toLowerCase()) || possibleWords.includes(guess.toLowerCase())){
+        letters.forEach(box => box.setAttribute("style", "color: #ffffff;"));
+        // correct guess
+        if(guess.toLowerCase() === answer){
+            letters.forEach(box => box.setAttribute("style", "background-color: #64b95c;"));
+        } else {
+            // incorrect guess
+            for(let i = 0; i < 5; i++){
+                if(guess.charAt(i).toLowerCase() == answer.charAt(i))
+                    letters[i].style.backgroundColor = "#64b95c";
+                else if(answer.includes(guess.charAt(i).toLowerCase()))
+                    letters[i].style.backgroundColor = "#e0ca69";
+                else
+                    letters[i].style.backgroundColor = "#a6acaf"
+            }
+            currentRow++;
+        }
+        
+    } else {
+        // invalid guess (abcde)
+        console.log("not valid word");
+    }
+}
+
+
+
 
 convertModal.addEventListener("keydown", function(e){
   if(e.code === "Enter"){
@@ -46,6 +123,7 @@ convertModalBtn.onclick = function(){
 
 secondBtn.onclick = function(){
     secondModal.style.display = "block";
+    answer = possibleWords[Math.floor(Math.random() * possibleWords.length)];
 }
 
 for(var i = 0; i < close.length; i++){
