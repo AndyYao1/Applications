@@ -13,8 +13,22 @@ var secondBtn = document.getElementById("secondButton");
 
 var secondModal = document.getElementById("secondModal");
 
+var secondModalContent = document.getElementById("secondModalContent");
 
-window.addEventListener("keydown", function(e){
+var boxes = document.getElementsByClassName("box");
+
+var currentBox = 0;
+
+
+window.addEventListener("keydown", function (e){
+  if(secondModal.style.display == "block" && (e.key >= 'a' && e.key <= 'z')){
+    boxes[currentBox].innerHTML = e.key.toUpperCase();
+    boxes[currentBox].style.border = "2px solid rgb(130, 130, 130)";
+    currentBox++;
+  }
+});
+
+convertModal.addEventListener("keydown", function(e){
   if(e.code === "Enter"){
     convert();
   }
