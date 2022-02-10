@@ -31,7 +31,13 @@ var answer;
 
 var finished = false;
 
+var keys = Array.from(document.getElementsByClassName("key"));
+
 var playAgainBtn = document.getElementById("playAgainBtn");
+
+var keyOrder = ['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','0','Z','X','C','V','B','N','M','-'];
+
+var dummy = document.getElementById("dummy");
 
 var possibleRequest = new XMLHttpRequest();
 possibleRequest.open('GET', 'https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt');
@@ -94,12 +100,23 @@ function submitGuess(){
         } else {
             // incorrect guess
             for(let i = 0; i < 5; i++){
-                if(guess.charAt(i).toLowerCase() == answer.charAt(i))
+                let index = keyOrder.indexOf(guess.charAt(i));
+                if(index > 9)
+                    index++;
+                if(guess.charAt(i).toLowerCase() == answer.charAt(i)){
+                    keys[index].style.backgroundColor = "#64b95c";
+                    keys[index].style.color = "#ffffff";
                     letters[i].style.backgroundColor = "#64b95c";
-                else if(answer.includes(guess.charAt(i).toLowerCase()))
+                } else if(answer.includes(guess.charAt(i).toLowerCase())){
+                    if(keys[index].style.backgroundColor != dummy.style.color)
+                        keys[index].style.backgroundColor = "#e0ca69";
+                    keys[index].style.color = "#ffffff";
                     letters[i].style.backgroundColor = "#e0ca69";
-                else
-                    letters[i].style.backgroundColor = "#717678"
+                }else{
+                    keys[index].style.backgroundColor = "#717678";
+                    keys[index].style.color = "#ffffff";
+                    letters[i].style.backgroundColor = "#717678";
+                }
             }
             currentRow++;
         }
@@ -112,10 +129,15 @@ function submitGuess(){
 playAgainBtn.onclick = function(){
     finished = false;
     answer = possibleWords[Math.floor(Math.random() * possibleWords.length)];
+    console.log(answer);
     for(let i = 0; i <= currentBox; i++){
         boxes[i].innerHTML = '';
         boxes[i].style.backgroundColor = "#ffffff";
         boxes[i].style.color = "#000000";
+    }
+    for(let key in keys){
+        keys[key].style.backgroundColor = "#ffffff";
+        keys[key].style.color = "#000000";
     }
     currentBox = 0;
     currentRow = 1;
@@ -142,6 +164,7 @@ secondBtn.onclick = function(){
     secondModal.style.display = "block";
     if(!finished)
         answer = possibleWords[Math.floor(Math.random() * possibleWords.length)];
+    console.log(answer);
 }
 
 for(var i = 0; i < close.length; i++){
