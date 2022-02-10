@@ -15,7 +15,9 @@ var secondModal = document.getElementById("secondModal");
 
 var secondModalContent = document.getElementById("secondModalContent");
 
-var boxes = document.getElementsByClassName("box");
+let boxes = document.getElementsByClassName("box");
+
+var playAgainBtn = document.getElementById("playAgainBtn");
 
 var currentBox = 0;
 
@@ -28,6 +30,8 @@ var guessableWords = [];
 var answer;
 
 var finished = false;
+
+var playAgainBtn = document.getElementById("playAgainBtn");
 
 var possibleRequest = new XMLHttpRequest();
 possibleRequest.open('GET', 'https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt');
@@ -81,7 +85,6 @@ function submitGuess(){
         guess = letters.map(box => box.innerHTML).join('');
     }
     // check if word is in guessable list
-    console.log(answer)
     if(guessableWords.includes(guess.toLowerCase()) || possibleWords.includes(guess.toLowerCase())){
         letters.forEach(box => box.setAttribute("style", "color: #ffffff;"));
         // correct guess
@@ -103,11 +106,20 @@ function submitGuess(){
         
     } else {
         // invalid guess (abcde)
-        console.log("not valid word");
     }
 }
 
-
+playAgainBtn.onclick = function(){
+    finished = false;
+    answer = possibleWords[Math.floor(Math.random() * possibleWords.length)];
+    for(let i = 0; i <= currentBox; i++){
+        boxes[i].innerHTML = '';
+        boxes[i].style.backgroundColor = "#ffffff";
+        boxes[i].style.color = "#000000";
+    }
+    currentBox = 0;
+    currentRow = 1;
+}
 
 
 convertModal.addEventListener("keydown", function(e){
@@ -128,7 +140,8 @@ convertModalBtn.onclick = function(){
 
 secondBtn.onclick = function(){
     secondModal.style.display = "block";
-    answer = possibleWords[Math.floor(Math.random() * possibleWords.length)];
+    if(!finished)
+        answer = possibleWords[Math.floor(Math.random() * possibleWords.length)];
 }
 
 for(var i = 0; i < close.length; i++){
