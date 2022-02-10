@@ -31,6 +31,8 @@ var answer;
 
 var finished = false;
 
+var started = false;
+
 var keys = Array.from(document.getElementsByClassName("key"));
 
 var playAgainBtn = document.getElementById("playAgainBtn");
@@ -39,15 +41,19 @@ var keyOrder = ['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H',
 
 var dummy = document.getElementById("dummy");
 
+var backspaceBtn = document.getElementById("backspace");
+
+var enterBtn = document.getElementById("enter");
+
 var possibleRequest = new XMLHttpRequest();
-possibleRequest.open('GET', 'https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt');
+possibleRequest.open('GET', 'https://raw.githubusercontent.com/AndyYao1/Applications/main/txt/possible.txt');
 possibleRequest.onload = function(){
     possibleWords = this.responseText.split(/\n/);
 };
 possibleRequest.send();
 
 var guessableRequest = new XMLHttpRequest();
-guessableRequest.open('GET', 'https://gist.githubusercontent.com/cfreshman/cdcdf777450c5b5301e439061d29694c/raw/de1df631b45492e0974f7affe266ec36fed736eb/wordle-allowed-guesses.txt');
+guessableRequest.open('GET', 'https://raw.githubusercontent.com/AndyYao1/Applications/main/txt/guessable.txt');
 guessableRequest.onload = function(){
     guessableWords = this.responseText.split(/\n/);
 };
@@ -143,6 +149,20 @@ playAgainBtn.onclick = function(){
     currentRow = 1;
 }
 
+for(let i = 0; i < keys.length; i++){
+    keys[i].onclick = function(){
+        addLetter(keys[i].innerHTML.toLowerCase());
+    }
+}
+
+backspaceBtn.onclick = function() {
+    deleteLetter();
+}
+
+enterBtn.onclick = function(){
+    submitGuess();
+}
+
 
 convertModal.addEventListener("keydown", function(e){
   if(e.code === "Enter"){
@@ -162,12 +182,13 @@ convertModalBtn.onclick = function(){
 
 secondBtn.onclick = function(){
     secondModal.style.display = "block";
-    if(!finished)
+    if(!finished && !started)
         answer = possibleWords[Math.floor(Math.random() * possibleWords.length)];
+    started = true;
     console.log(answer);
 }
 
-for(var i = 0; i < close.length; i++){
+for(let i = 0; i < close.length; i++){
     close[i].onclick = function(){
       convertModal.style.display = "none";
       secondModal.style.display = "none";
