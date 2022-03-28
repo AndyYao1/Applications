@@ -72,7 +72,7 @@ window.addEventListener("keydown", function (e){
 });
 
 function addLetter(e){
-    if(currentBox < currentRow * 5 && !finished){
+    if(currentBox < currentRow * 5 && !finished && currentBox < 30){
         boxes[currentBox].innerHTML = e.toUpperCase();
         boxes[currentBox].style.border = "2px solid rgb(130, 130, 130)";
         currentBox++;
@@ -136,10 +136,11 @@ playAgainBtn.onclick = function(){
     finished = false;
     answer = possibleWords[Math.floor(Math.random() * possibleWords.length)];
     console.log(answer);
-    for(let i = 0; i <= currentBox; i++){
+    for(let i = 0; i < currentBox; i++){
         boxes[i].innerHTML = '';
         boxes[i].style.backgroundColor = "#ffffff";
         boxes[i].style.color = "#000000";
+        boxes[i].style.border = "1px solid rgb(168, 168, 168)";
     }
     for(let key in keys){
         keys[key].style.backgroundColor = "#ffffff";
